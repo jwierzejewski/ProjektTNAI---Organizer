@@ -1,0 +1,47 @@
+﻿<h3>Test</h3>
+@page "/test"
+@using Microsoft.EntityFrameworkCore;
+@using Model.Entities;
+@using ProjektTNAI.Model;
+@using ProjektTNAI.Repository.Abstract;
+@using ProjektTNAI.Repository.Concrete;
+@inject AppDbContext appDbContext
+@inject ICategoryRepository categoryRepository
+
+<PageTitle>Test</PageTitle>
+
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in categories)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Category>? categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //_categoryRepository = new CategoryRepository();
+        //categories = await _categoryRepository.GetAllCategoriesAsync();
+        categories = await categoryRepository.GetAllCategoriesAsync();
+    }
+}
