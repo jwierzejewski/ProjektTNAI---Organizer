@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjektTNAI.Model", "Model\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjektTNAI.Repository", "ProjektTNAI.Repository\ProjektTNAI.Repository.csproj", "{4D61FA40-8367-4EDC-9099-BAAB474BC3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjektTNAI_BlazorApp", "ProjektTNAI_BlazorApp\ProjektTNAI_BlazorApp.csproj", "{A0A5E963-3052-438A-84F2-A876B046D4FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjektTNAI_BlazorApp", "ProjektTNAI_BlazorApp\ProjektTNAI_BlazorApp.csproj", "{A0A5E963-3052-438A-84F2-A876B046D4FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

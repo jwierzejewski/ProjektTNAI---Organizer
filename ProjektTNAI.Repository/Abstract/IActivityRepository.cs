@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjektTNAI.Repository.Abstract
 {
-    internal interface IActivityRepository
+    public interface IActivityRepository
     {
         Task<Activity> GetActivityAsync(int id);
         Task<List<Activity>> GetAllActivitiesAsync();
