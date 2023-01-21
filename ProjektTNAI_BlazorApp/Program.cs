@@ -9,6 +9,7 @@ using ProjektTNAI.Repository.Abstract;
 using ProjektTNAI.Repository.Concrete;
 using ProjektTNAI_BlazorApp.Areas.Identity;
 using ProjektTNAI_BlazorApp.Data;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
+
+builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
 

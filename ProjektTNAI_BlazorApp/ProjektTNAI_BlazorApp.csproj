@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.4.0.44" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.4.0.44" />
   </ItemGroup>
 
   <ItemGroup>
