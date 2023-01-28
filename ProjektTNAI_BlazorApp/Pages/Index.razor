@@ -15,6 +15,7 @@
 <PageTitle>Index</PageTitle>
 
 <AuthorizeView Context="authorizeContext">
+    <Authorized>
 @if (activities == null)
 {
     <p><em>Loading...</em></p>
@@ -79,6 +80,9 @@
     </ScheduleViews>
 </SfSchedule>
 }
+    </Authorized>
+    <NotAuthorized>
+    </NotAuthorized>
 </AuthorizeView>
 @code {
     public class AppointmentData
