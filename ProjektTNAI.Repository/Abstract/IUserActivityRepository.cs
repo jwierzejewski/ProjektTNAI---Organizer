@@ -12,6 +12,6 @@ namespace ProjektTNAI.Repository.Abstract
         Task<UserActivity> GetUserActivityAsync(int id);
         Task<List<UserActivity>> GetAllUserActivitiesAsync(String UserId);
         Task<bool> SaveUserActivityAsync(UserActivity userActivity);
-        Task<bool> DeleteCategoryAsync(int id);
+        Task<bool> DeleteUserActivityAsync(int id);
     }
 }

@@ -40,6 +40,38 @@ namespace ProjektTNAI.Model
                     Name = "Jedzenie",
                 }
             );
+            modelBuilder.Entity<Activity>().HasData(
+                new Activity
+                {
+                    Id = 1,
+                    Name = "Piłka Nożna",
+                    CategoryId= 1,
+                },
+                new Activity
+                {
+                    Id = 2,
+                    Name = "Siatkówka",
+                    CategoryId = 1,
+                },
+                new Activity
+                {
+                    Id = 3,
+                    Name = "Siłownia",
+                    CategoryId = 1,
+                },
+                new Activity
+                {
+                    Id = 4,
+                    Name = "Wykład",
+                    CategoryId = 2,
+                },
+                new Activity
+                {
+                    Id = 5,
+                    Name = "Ćwiczenia",
+                    CategoryId = 2,
+                }
+            );
         }
 
         public static AppDbContext Create()

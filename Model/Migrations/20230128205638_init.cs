@@ -194,9 +194,11 @@ namespace ProjektTNAI.Model.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ActivityId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BeginOfActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndOfActivity = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EndOfActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,8 +213,7 @@ namespace ProjektTNAI.Model.Migrations
                         name: "FK_UserActivities_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -229,6 +230,18 @@ namespace ProjektTNAI.Model.Migrations
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 3, "Jedzenie" });
+
+            migrationBuilder.InsertData(
+                table: "Activities",
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Piłka Nożna" },
+                    { 2, 1, "Siatkówka" },
+                    { 3, 1, "Siłownia" },
+                    { 4, 2, "Wykład" },
+                    { 5, 2, "Ćwiczenia" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_CategoryId",

@@ -17,7 +17,7 @@ namespace ProjektTNAI.Model.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.BeginOfActivity).IsRequired();
             builder.Property(x => x.EndOfActivity).IsRequired();
-            builder.Property(x=> x.UserId).IsRequired();
+            builder.Property(x=> x.UserName).IsRequired();
             builder.HasOne<Activity>(x => x.Activity).WithMany(x => x.UserActivities).HasForeignKey(x=>x.ActivityId);
         }
     }

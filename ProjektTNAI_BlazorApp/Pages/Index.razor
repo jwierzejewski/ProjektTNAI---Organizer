@@ -1,14 +1,75 @@
 ﻿@page "/"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@using ProjektTNAI.Repository.Concrete;
+@using ProjektTNAI_BlazorApp.Data;
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Calendars
+@using System.ComponentModel.DataAnnotations
+@using Syncfusion.Blazor.Inputs
+@inject IActivityRepository activityRepository
+@inject ICategoryRepository categoryRepository
+
 
 <PageTitle>Index</PageTitle>
-@*
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<AuthorizeView Context="authorizeContext">
+@if (activities == null)
+{
+    <p><em>Loading...</em></p>
+}else
+{
+    <SfSchedule TValue=AppointmentData ShowQuickInfo="true">
+        <ScheduleEventSettings TValue=AppointmentData>
+            <ScheduleField Id="Id">
+                <FieldSubject Name="ActivityName.Name"></FieldSubject>
+                <FieldStartTime Name="StartTime"></FieldStartTime>
+                <FieldEndTime Name="EndTime"></FieldEndTime>
+            </ScheduleField>
+            <SfDataManager AdaptorInstance="@typeof(CustomAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
+        </ScheduleEventSettings>
 
-<SurveyPrompt Title="How is Blazor working for you?" />*@
-
-<SfSchedule TValue=AppointmentData>
+    <ScheduleQuickInfoTemplates TemplateType="TemplateType.Cell">
+        <ContentTemplate>
+            <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityName)">
+                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
+                        </SfDropDownList>
+        </ContentTemplate>
+    </ScheduleQuickInfoTemplates>
+    <ScheduleTemplates>
+        <EditorTemplate>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Name Activity</td>
+                    <td>
+                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityName)">
+                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                                <ValidationMessage For="()=>((context as AppointmentData).ActivityName)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>From</td>
+                    <td colspan="4">
+                        <SfDateTimePicker @bind-Value="@((context as AppointmentData).StartTime)"></SfDateTimePicker>
+                    </td>
+                </tr>
+                <tr>
+                     <td class="e-textlabel">To</td>
+                      <td colspan="4">
+                            <SfDateTimePicker @bind-Value="@((context as AppointmentData).EndTime)"></SfDateTimePicker>
+                </td>
+                </tr>
+                                
+                      
+                                  
+            </tbody>
+        </table>
+                    <SfTextBox @bind-Value="@((context as AppointmentData).Description)" Placeholder="Notes"></SfTextBox>
+        </EditorTemplate>
+    </ScheduleTemplates>
     <ScheduleViews>
         <ScheduleView Option="View.Day"></ScheduleView>
         <ScheduleView Option="View.Week"></ScheduleView>
@@ -17,18 +78,41 @@ Welcome to your new app.
         <ScheduleView Option="View.Agenda"></ScheduleView>
     </ScheduleViews>
 </SfSchedule>
+}
+</AuthorizeView>
 @code {
     public class AppointmentData
     {
         public int Id { get; set; }
-        public string Subject { get; set; }
-        public string Location { get; set; }
+        [Required]
+        public ActivityDataModel ActivityName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Description { get; set; }
-        public bool IsAllDay { get; set; }
-        public string RecurrenceRule { get; set; }
-        public string RecurrenceException { get; set; }
-        public Nullable<int> RecurrenceID { get; set; }
     }
+    private List<Activity>? activities;
+    private List<Category>? categories;
+    List<ActivityDataModel>? activityDataList;
+
+    public class ActivityDataModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string CategoryName { get; set; }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryRepository.GetAllCategoriesAsync();
+        activities = await activityRepository.GetAllActivitiesAsync();
+
+        activityDataList = new List<ActivityDataModel>();
+        foreach(var activity in activities)
+        {
+            activityDataList.Add(new ActivityDataModel() { Id = activity.Id, Name = activity.Name, CategoryName=activity.Category.Name });
+        }
+    }
+
+    
 }

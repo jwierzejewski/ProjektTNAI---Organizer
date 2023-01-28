@@ -11,7 +11,8 @@ namespace Model.Entities
     {
         public int Id { get; set; }
         public int ActivityId { get; set; }
-        public String UserId { get; set; }
+        public String UserName { get; set; }
+        public String Description { get; set; }
         public DateTime BeginOfActivity { get; set; }
         public DateTime EndOfActivity { get; set; }
         public virtual Activity Activity { get; set; }

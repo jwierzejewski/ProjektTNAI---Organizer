@@ -10,6 +10,8 @@ using ProjektTNAI.Repository.Concrete;
 using ProjektTNAI_BlazorApp.Areas.Identity;
 using ProjektTNAI_BlazorApp.Data;
 using Syncfusion.Blazor;
+using Syncfusion.Blazor.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +26,16 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
+//builder.Services.AddScoped<AuthenticationStateProvider>();
+//builder.Services.AddScoped<AuthenticationStateProvider>(p=> p.GetRequiredService<ApiAuthenticationStateProvider>());
+
+
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 builder.Services.AddScoped<IUserActivityRepository, UserActivityRepository>();
+builder.Services.AddScoped<CustomAdaptor>();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddSyncfusionBlazor();
 

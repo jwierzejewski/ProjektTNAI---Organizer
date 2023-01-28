@@ -21,9 +21,9 @@ namespace ProjektTNAI.Repository.Concrete
             return await Context.UserActivities.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<UserActivity>> GetAllUserActivitiesAsync(string UserId)
+        public async Task<List<UserActivity>> GetAllUserActivitiesAsync(string UserName)
         {         
-            return await Context.UserActivities.Where(x => x.UserId == UserId).ToListAsync();
+            return await Context.UserActivities.Where(x => x.UserName == UserName).ToListAsync();
 
         }
 
@@ -45,7 +45,7 @@ namespace ProjektTNAI.Repository.Concrete
             return true;
         }
 
-        public async Task<bool> DeleteCategoryAsync(int id)
+        public async Task<bool> DeleteUserActivityAsync(int id)
         {
             var userActivity = await GetUserActivityAsync(id);
             if (userActivity == null)
