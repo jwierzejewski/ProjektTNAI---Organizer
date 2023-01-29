@@ -29,7 +29,7 @@
         var user = (await AuthStat).User;
         if (!user.Identity.IsAuthenticated)
         {
-            NavigationManager.NavigateTo($"Identity/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
+            NavigationManager.NavigateTo($"Identity/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.ToBaseRelativePath(NavigationManager.Uri))}");
         }
     }
 }
