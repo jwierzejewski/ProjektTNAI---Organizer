@@ -34,7 +34,7 @@ namespace ProjektTNAI_BlazorApp.Data
                 EventData.Add(new AppointmentData()
                 {
                     Id = userActivity.Id,
-                    ActivityName = new ActivityDataModel()
+                    ActivityData = new ActivityDataModel()
                     {
                         Id = userActivity.Id,
                         CategoryName = categories.FirstOrDefault(x => x.Id == activities.FirstOrDefault(x => x.Id == userActivity.ActivityId).CategoryId).Name,
@@ -51,12 +51,12 @@ namespace ProjektTNAI_BlazorApp.Data
         public async override Task<object> InsertAsync(DataManager dataManager, object data, string key)
         {
             AppointmentData appointmentData = (data as AppointmentData);
-            if (appointmentData.ActivityName == null || appointmentData.StartTime == null || appointmentData.EndTime == null)
+            if (appointmentData.ActivityData == null || appointmentData.StartTime == null || appointmentData.EndTime == null)
                 return false;
             string userName = (await _getAuthenticationStateAsync.GetAuthenticationStateAsync()).User.Identity.Name;
             var userActivity = new UserActivity()
             {
-                ActivityId = appointmentData.ActivityName.Id,
+                ActivityId = appointmentData.ActivityData.Id,
                 BeginOfActivity = appointmentData.StartTime,
                 EndOfActivity = appointmentData.EndTime,
                 UserName = userName,
@@ -77,7 +77,7 @@ namespace ProjektTNAI_BlazorApp.Data
             if (userActivity == null)
                 return false;
 
-            userActivity.ActivityId = appointmentData.ActivityName.Id;
+            userActivity.ActivityId = appointmentData.ActivityData.Id;
             userActivity.BeginOfActivity = appointmentData.StartTime;
             userActivity.EndOfActivity = appointmentData.EndTime;
             userActivity.Description= appointmentData.Description;
@@ -112,7 +112,7 @@ namespace ProjektTNAI_BlazorApp.Data
                 string userId = (await _getAuthenticationStateAsync.GetAuthenticationStateAsync()).User.Identity.Name;
                 await _userActivityRepository.SaveUserActivityAsync(new UserActivity()
                 {
-                    ActivityId = data.ActivityName.Id,
+                    ActivityId = data.ActivityData.Id,
                     BeginOfActivity = data.StartTime,
                     EndOfActivity = data.EndTime,
                     UserName = userId,
@@ -128,7 +128,7 @@ namespace ProjektTNAI_BlazorApp.Data
                 UserActivity userActivity = await _userActivityRepository.GetUserActivityAsync(appointmentData.Id);
                 if (appointmentData != null)
                 {
-                    userActivity.ActivityId = appointmentData.ActivityName.Id;
+                    userActivity.ActivityId = appointmentData.ActivityData.Id;
                     userActivity.BeginOfActivity = appointmentData.StartTime;
                     userActivity.EndOfActivity = appointmentData.EndTime;
                     userActivity.Description = appointmentData.Description;

@@ -24,7 +24,7 @@
     <SfSchedule TValue=AppointmentData ShowQuickInfo="true">
         <ScheduleEventSettings TValue=AppointmentData>
             <ScheduleField Id="Id">
-                <FieldSubject Name="ActivityName.Name"></FieldSubject>
+                <FieldSubject Name="ActivityData.Name"></FieldSubject>
                 <FieldStartTime Name="StartTime"></FieldStartTime>
                 <FieldEndTime Name="EndTime"></FieldEndTime>
             </ScheduleField>
@@ -33,7 +33,7 @@
 
     <ScheduleQuickInfoTemplates TemplateType="TemplateType.Cell">
         <ContentTemplate>
-            <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityName)">
+            <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
                             <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
                         </SfDropDownList>
         </ContentTemplate>
@@ -45,10 +45,10 @@
                 <tr>
                     <td>Name Activity</td>
                     <td>
-                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityName)">
+                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
                             <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
                         </SfDropDownList>
-                                <ValidationMessage For="()=>((context as AppointmentData).ActivityName)" />
+                                <ValidationMessage For="()=>((context as AppointmentData).ActivityData)" />
                     </td>
                 </tr>
                 <tr>
@@ -89,7 +89,7 @@
     {
         public int Id { get; set; }
         [Required]
-        public ActivityDataModel ActivityName { get; set; }
+        public ActivityDataModel ActivityData { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Description { get; set; }
