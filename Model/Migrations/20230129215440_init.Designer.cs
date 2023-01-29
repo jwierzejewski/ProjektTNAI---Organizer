@@ -12,8 +12,8 @@ using ProjektTNAI.Model;
 namespace ProjektTNAI.Model.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230129203258_roles")]
-    partial class roles
+    [Migration("20230129215440_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,15 +53,15 @@ namespace ProjektTNAI.Model.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7342c908-a6a0-474b-88d8-57e15f52e47a",
-                            ConcurrencyStamp = "9b56837a-687a-4f10-a342-311ebc59c12f",
+                            Id = "064a760b-e01d-4de0-a5a7-67212cc089c8",
+                            ConcurrencyStamp = "8d33f640-a3e2-490c-8de8-8fd7af4d39e8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "7311f4ed-b6b6-40ca-a504-0dfe9c98e293",
-                            ConcurrencyStamp = "11cb0eb7-3ff9-408f-af65-43190731f642",
+                            Id = "1832d33a-7314-45d0-94b6-d25b027dbd47",
+                            ConcurrencyStamp = "c6a49298-1fb6-421a-a968-2f7f43f1d0c6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

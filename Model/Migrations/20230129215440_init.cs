@@ -217,19 +217,23 @@ namespace ProjektTNAI.Model.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Sport" });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "064a760b-e01d-4de0-a5a7-67212cc089c8", "8d33f640-a3e2-490c-8de8-8fd7af4d39e8", "User", "USER" },
+                    { "1832d33a-7314-45d0-94b6-d25b027dbd47", "c6a49298-1fb6-421a-a968-2f7f43f1d0c6", "Admin", "ADMIN" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Nauka" });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Jedzenie" });
+                values: new object[,]
+                {
+                    { 1, "Sport" },
+                    { 2, "Nauka" },
+                    { 3, "Jedzenie" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Activities",
