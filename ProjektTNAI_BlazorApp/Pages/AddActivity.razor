@@ -1,0 +1,49 @@
+﻿@using Model.Entities;
+@using ProjektTNAI.Model;
+@using ProjektTNAI.Repository.Abstract;
+@using ProjektTNAI.Repository.Concrete;
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore;
+@inject IUserActivityRepository userActivityRepository
+@inject IActivityRepository activityRepository
+@inject ICategoryRepository categoryRepository
+
+@page "/AddActivity"
+
+<h2>Add new activity</h2>
+
+<EditForm Model="@activity" OnSubmit="@HandleSubmit">
+    <div>
+    <label>
+        Activity name:
+    </label>
+        <InputText id="activity_name" @bind-Value="activity.Name" />
+    </div>
+    <lable>
+        Activity category:
+    </lable>
+        <InputText id="category_name" @bind-Value="category.Name" />
+    <lable>
+        Activity description:
+    </lable>
+        <InputText id="activity_description" @bind-Value="userActivity.Description" />
+    <lable>
+        Activity start date:
+    </lable>
+        <InputDate id="activity_start" @bind-Value="userActivity.BeginOfActivity" />
+    <lable>
+        Activity end date:
+    </lable>
+        <InputDate id="activity_start" @bind-Value="userActivity.EndOfActivity" />
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private Activity activity = new();
+    private UserActivity userActivity = new();
+    private Category category = new();
+    private void HandleSubmit()
+    {
+        //dodanie do bazy danych
+    }
+}

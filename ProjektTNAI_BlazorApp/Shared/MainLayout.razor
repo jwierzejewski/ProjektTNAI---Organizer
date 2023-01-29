@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@inject NavigationManager NavigationManager
 <PageTitle>ProjektTNAI_BlazorApp</PageTitle>
 
 <div class="page">
@@ -18,3 +18,18 @@
         </article>
     </main>
 </div>
+
+@code {
+
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var user = (await AuthStat).User;
+        if (!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo($"Identity/Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}");
+        }
+    }
+}
