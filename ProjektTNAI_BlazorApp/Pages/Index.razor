@@ -16,7 +16,7 @@
 
 <AuthorizeView Context="authorizeContext">
     <Authorized>
-@if (activities == null)
+@if (activities == null || categories == null)
 {
     <p><em>Loading...</em></p>
 }else
@@ -114,7 +114,8 @@
         activityDataList = new List<ActivityDataModel>();
         foreach(var activity in activities)
         {
-            activityDataList.Add(new ActivityDataModel() { Id = activity.Id, Name = activity.Name, CategoryName=activity.Category.Name });
+            ActivityDataModel data = new ActivityDataModel() { Id = activity.Id, Name = activity.Name, CategoryName = categories.FirstOrDefault(x=>x.Id==activity.CategoryId).Name };
+            activityDataList.Add(data);
         }
     }
 

@@ -1,0 +1,60 @@
+﻿@page "/categories"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@inject ICategoryRepository categoryRepository
+
+
+<h1>Categories</h1>
+<AuthorizeView>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/category/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Category
+        </a>
+    </div>
+</div>
+<br />
+@if (categoryList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in categoryList)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.Name</td>
+                    <td>
+                        <a href='/category/edit/@category.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/category/delete/@category.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+</AuthorizeView>
+@code {
+    private List<Category>? categoryList;
+    protected Category category = new Category();
+    protected override async Task OnInitializedAsync()
+    {
+        categoryList = await categoryRepository.GetAllCategoriesAsync();
+    }
+    
+}

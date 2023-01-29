@@ -1,0 +1,57 @@
+﻿@page "/activity/delete/{Id:int}"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@inject IActivityRepository activityRepository
+@inject ICategoryRepository categoryRepository
+@inject NavigationManager NavigationManager
+
+
+<AuthorizeView>
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}else
+{
+<h2>Delete Activity</h2>
+<br/>
+<div class="form-group">
+    <h4>Do you want to delete this user?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>@activity.Name</td>
+            </tr>
+            <tr>
+                <td>Category Name</td>
+                    <td>@categories.FirstOrDefault(x=>x.Id==activity.Id).Name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveActivity(activity.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+}
+</AuthorizeView>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    Activity activity = new Activity();
+    private List<Category>? categories;
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryRepository.GetAllCategoriesAsync();
+        activity = await activityRepository.GetActivityAsync(Id);
+    }
+    protected async Task RemoveActivity(int Id)
+    {
+        await activityRepository.DeleteActivityAsync(Id);
+        NavigationManager.NavigateTo("/activities");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/activities");
+    }
+}

@@ -1,0 +1,65 @@
+﻿@page "/activities"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@inject IActivityRepository activityRepository
+@inject ICategoryRepository categoryRepository
+
+
+<h1>Activities</h1>
+<AuthorizeView>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/activity/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Activity
+        </a>
+    </div>
+</div>
+<br />
+@if (activityList == null || categories ==null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activity in activityList)
+            {
+                <tr>
+                    <td>@activity.Id</td>
+                    <td>@activity.Name</td>
+                    <td>@categories.FirstOrDefault(x=>x.Id==activity.CategoryId).Name</td>
+                    <td>
+                        <a href='/activity/edit/@activity.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/activity/delete/@activity.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+</AuthorizeView>
+@code {
+    protected List<Activity>? activityList;
+    private List<Category>? categories;
+    protected Activity activity = new Activity();
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryRepository.GetAllCategoriesAsync();
+        activityList = await activityRepository.GetAllActivitiesAsync();
+    }
+    
+}

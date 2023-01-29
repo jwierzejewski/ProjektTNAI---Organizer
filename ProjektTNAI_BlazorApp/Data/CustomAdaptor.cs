@@ -10,9 +10,13 @@ namespace ProjektTNAI_BlazorApp.Data
     public class CustomAdaptor : DataAdaptor
     {
         IUserActivityRepository _userActivityRepository;
+        ICategoryRepository _categoryRepository;
+        IActivityRepository _activityRepository;
         AuthenticationStateProvider _getAuthenticationStateAsync;
-        public CustomAdaptor(IUserActivityRepository userActivityRepository, AuthenticationStateProvider authenticationStateProvider) : base()
+        public CustomAdaptor(IUserActivityRepository userActivityRepository, ICategoryRepository categoryRepository, IActivityRepository activityRepository, AuthenticationStateProvider authenticationStateProvider) : base()
         {
+            _activityRepository = activityRepository;
+            _categoryRepository = categoryRepository;
             _userActivityRepository = userActivityRepository;
             _getAuthenticationStateAsync = authenticationStateProvider;
         }
@@ -23,16 +27,23 @@ namespace ProjektTNAI_BlazorApp.Data
             string userId = (await _getAuthenticationStateAsync.GetAuthenticationStateAsync()).User.Identity.Name;
             List<UserActivity> userActivities = await _userActivityRepository.GetAllUserActivitiesAsync(userId);
             List<AppointmentData> EventData = new List<AppointmentData>();
+            List<Category> categories = await _categoryRepository.GetAllCategoriesAsync();
+            List<Activity> activities = await _activityRepository.GetAllActivitiesAsync();
             foreach (var userActivity in userActivities)
             {
                 EventData.Add(new AppointmentData()
                 {
                     Id = userActivity.Id,
-                    ActivityName = new ActivityDataModel() { Id=userActivity.Id, CategoryName=userActivity.Activity.Category.Name, Name=userActivity.Activity.Name},
+                    ActivityName = new ActivityDataModel()
+                    {
+                        Id = userActivity.Id,
+                        CategoryName = categories.FirstOrDefault(x => x.Id == activities.FirstOrDefault(x => x.Id == userActivity.ActivityId).CategoryId).Name,
+                        Name = activities.FirstOrDefault(x=>x.Id==userActivity.ActivityId).Name,
+                    },
                     StartTime = userActivity.BeginOfActivity,
                     EndTime = userActivity.EndOfActivity,
                     Description = userActivity.Description
-                });
+                }) ;
             }
 
             return dataManagerRequest.RequiresCounts ? new DataResult() { Result = EventData, Count = EventData.Count() } : (object)EventData;

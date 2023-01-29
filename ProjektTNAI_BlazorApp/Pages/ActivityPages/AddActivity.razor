@@ -1,0 +1,73 @@
+﻿@page "/activity/add"
+@page "/activity/edit/{Id:int}"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@using Syncfusion.Blazor.DropDowns
+@inject NavigationManager NavigationManager
+@inject IActivityRepository activityRepository
+@inject ICategoryRepository categoryRepository
+
+<AuthorizeView Context="AuthContext">
+@if (activities == null || categories == null)
+{
+    <p><em>Loading...</em></p>
+}else
+{
+<h1>@Title Activity</h1>
+<hr />
+<EditForm Model="@activity" OnValidSubmit="SaveActivity">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="activity.Name" />
+        </div>
+        <ValidationMessage For="@(() => activity.Name)" />
+    </div>
+    <div class="mb-3">
+        <label for="Address" class="form-label">Address</label>
+        <div class="col-md-4">
+            <SfDropDownList DataSource="@categories" @bind-Value="@activity.CategoryId">
+                            <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
+                        </SfDropDownList>
+        </div>
+        <ValidationMessage For="@(() => activity.CategoryId)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+}
+</AuthorizeView>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected string Title = "Add";
+    protected Activity activity = new Activity();
+    private List<Activity>? activities;
+    private List<Category>? categories;
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryRepository.GetAllCategoriesAsync();
+        activities = await activityRepository.GetAllActivitiesAsync();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            Title = "Edit";
+            activity = await activityRepository.GetActivityAsync(Id);
+        }
+    }
+    protected async Task SaveActivity()
+    {
+       
+        await activityRepository.SaveActivityAsync(activity); 
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/activities");
+    }
+}

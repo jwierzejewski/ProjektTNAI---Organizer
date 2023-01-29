@@ -1,0 +1,51 @@
+﻿@page "/category/delete/{Id:int}"
+@using Model.Entities;
+@using ProjektTNAI.Repository.Abstract;
+@inject ICategoryRepository categoryRepository
+@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}else
+{
+<h2>Delete Category</h2>
+<br/>
+<div class="form-group">
+    <h4>Do you want to delete this user?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>@category.Name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveCategory(category.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+}
+</AuthorizeView>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    Category category = new Category();
+    private List<Category>? categories;
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await categoryRepository.GetAllCategoriesAsync();
+        category = await categoryRepository.GetCategoryAsync(Id);
+    }
+    protected async Task RemoveCategory(int Id)
+    {
+        await categoryRepository.DeleteCategoryAsync(Id);
+        NavigationManager.NavigateTo("/categories");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/categories");
+    }
+}
