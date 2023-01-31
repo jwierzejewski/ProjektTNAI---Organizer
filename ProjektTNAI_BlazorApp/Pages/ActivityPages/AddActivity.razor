@@ -25,7 +25,7 @@
         <ValidationMessage For="@(() => activity.Name)" />
     </div>
     <div class="mb-3">
-        <label for="Address" class="form-label">Address</label>
+        <label for="Address" class="form-label">Category</label>
         <div class="col-md-4">
             <SfDropDownList DataSource="@categories" @bind-Value="@activity.CategoryId">
                             <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>

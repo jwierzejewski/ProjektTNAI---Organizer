@@ -16,70 +16,101 @@
 
 <AuthorizeView Context="authorizeContext">
     <Authorized>
-@if (activities == null || categories == null)
-{
-    <p><em>Loading...</em></p>
-}else
-{
-    <SfSchedule TValue=AppointmentData ShowQuickInfo="true">
-        <ScheduleEventSettings TValue=AppointmentData>
-            <ScheduleField Id="Id">
-                <FieldSubject Name="ActivityData.Name"></FieldSubject>
-                <FieldStartTime Name="StartTime"></FieldStartTime>
-                <FieldEndTime Name="EndTime"></FieldEndTime>
-            </ScheduleField>
-            <SfDataManager AdaptorInstance="@typeof(CustomAdaptor)" Adaptor="Adaptors.CustomAdaptor"></SfDataManager>
-        </ScheduleEventSettings>
+        @if (activities == null || categories == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <SfSchedule TValue=AppointmentData ShowQuickInfo="true" AllowDragAndDrop="false">
+                <ScheduleEventSettings TValue=AppointmentData>
 
-    <ScheduleQuickInfoTemplates TemplateType="TemplateType.Cell">
-        <ContentTemplate>
-            <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
-                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
-                        </SfDropDownList>
-        </ContentTemplate>
-    </ScheduleQuickInfoTemplates>
-    <ScheduleTemplates>
-        <EditorTemplate>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Name Activity</td>
-                    <td>
-                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
-                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
-                        </SfDropDownList>
-                                <ValidationMessage For="()=>((context as AppointmentData).ActivityData)" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>From</td>
-                    <td colspan="4">
-                        <SfDateTimePicker @bind-Value="@((context as AppointmentData).StartTime)"></SfDateTimePicker>
-                    </td>
-                </tr>
-                <tr>
-                     <td class="e-textlabel">To</td>
-                      <td colspan="4">
-                            <SfDateTimePicker @bind-Value="@((context as AppointmentData).EndTime)"></SfDateTimePicker>
-                </td>
-                </tr>
-                                
-                      
-                                  
-            </tbody>
-        </table>
-                    <SfTextBox @bind-Value="@((context as AppointmentData).Description)" Placeholder="Notes"></SfTextBox>
-        </EditorTemplate>
-    </ScheduleTemplates>
-    <ScheduleViews>
-        <ScheduleView Option="View.Day"></ScheduleView>
-        <ScheduleView Option="View.Week"></ScheduleView>
-        <ScheduleView Option="View.WorkWeek"></ScheduleView>
-        <ScheduleView Option="View.Month"></ScheduleView>
-        <ScheduleView Option="View.Agenda"></ScheduleView>
-    </ScheduleViews>
-</SfSchedule>
-}
+
+                    <ScheduleField Id="Id">
+
+                        <FieldSubject Name="ActivityData.Name"></FieldSubject>
+                        <FieldStartTime Name="StartTime"></FieldStartTime>
+                        <FieldEndTime Name="EndTime"></FieldEndTime>
+                        <FieldDescription Name="Description"></FieldDescription>
+                    </ScheduleField>
+                    <SfDataManager AdaptorInstance="@typeof(CustomAdaptor)" Adaptor="Adaptors.CustomAdaptor">
+                    </SfDataManager>
+
+                </ScheduleEventSettings>
+
+                <ScheduleQuickInfoTemplates TemplateType="TemplateType.Cell">
+                    <ContentTemplate>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Activity name:</td>
+                                    <td>
+                                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
+                                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
+                                        </SfDropDownList>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Description:
+                                    </td>
+                                    <td>
+                                        <SfTextBox @bind-Value="@((context as AppointmentData).Description)" Placeholder="Notes"></SfTextBox>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </ContentTemplate>
+                </ScheduleQuickInfoTemplates>
+                <ScheduleTemplates>
+                    <EditorTemplate>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Activity name</td>
+                                    <td>
+                                        <SfDropDownList DataSource="@activityDataList" @bind-Value="@((context as AppointmentData).ActivityData)">
+                                            <DropDownListFieldSettings Text="Name" GroupBy="CategoryName"></DropDownListFieldSettings>
+                                        </SfDropDownList>
+                                        <ValidationMessage For="()=>((context as AppointmentData).ActivityData)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>From</td>
+                                    <td colspan="4">
+                                        <SfDateTimePicker @bind-Value="@((context as AppointmentData).StartTime)"></SfDateTimePicker>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="e-textlabel">To</td>
+                                    <td colspan="4">
+                                        <SfDateTimePicker @bind-Value="@((context as AppointmentData).EndTime)"></SfDateTimePicker>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Description
+                                    </td>
+                                    <td>
+                                        <SfTextBox Multiline=true @bind-Value="@((context as AppointmentData).Description)" Placeholder="Notes"></SfTextBox>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </EditorTemplate>
+                </ScheduleTemplates>
+                <ScheduleViews>
+                    <ScheduleView Option="View.Day"></ScheduleView>
+                    <ScheduleView Option="View.Week"></ScheduleView>
+                    <ScheduleView Option="View.WorkWeek"></ScheduleView>
+                    <ScheduleView Option="View.Month"></ScheduleView>
+                    <ScheduleView Option="View.Agenda"></ScheduleView>
+                </ScheduleViews>
+            </SfSchedule>
+        }
     </Authorized>
     <NotAuthorized>
     </NotAuthorized>
@@ -112,12 +143,12 @@
         activities = await activityRepository.GetAllActivitiesAsync();
 
         activityDataList = new List<ActivityDataModel>();
-        foreach(var activity in activities)
+        foreach (var activity in activities)
         {
-            ActivityDataModel data = new ActivityDataModel() { Id = activity.Id, Name = activity.Name, CategoryName = categories.FirstOrDefault(x=>x.Id==activity.CategoryId).Name };
+            ActivityDataModel data = new ActivityDataModel() { Id = activity.Id, Name = activity.Name, CategoryName = categories.FirstOrDefault(x => x.Id == activity.CategoryId).Name };
             activityDataList.Add(data);
         }
     }
 
-    
+
 }
