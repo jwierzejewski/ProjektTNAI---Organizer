@@ -37,6 +37,7 @@ else
                     <td>@activity.Id</td>
                     <td>@activity.Name</td>
                     <td>@categories.FirstOrDefault(x=>x.Id==activity.CategoryId).Name</td>
+                    <AuthorizeView Roles="Admin" Context="AuthContext">
                     <td>
                         <a href='/activity/edit/@activity.Id' class="btn btn-outline-dark" role="button">
                             Edit
@@ -45,6 +46,7 @@ else
                             Delete
                         </a>
                     </td>
+                    </AuthorizeView>
                 </tr>
             }
         </tbody>

@@ -19,12 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContextFactory<AppDbContext>(options =>options.UseSqlServer(connectionString), ServiceLifetime.Transient);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 //builder.Services.AddScoped<AuthenticationStateProvider>();
 //builder.Services.AddScoped<AuthenticationStateProvider>(p=> p.GetRequiredService<ApiAuthenticationStateProvider>());

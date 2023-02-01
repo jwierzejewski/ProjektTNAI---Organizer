@@ -221,8 +221,8 @@ namespace ProjektTNAI.Model.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "064a760b-e01d-4de0-a5a7-67212cc089c8", "8d33f640-a3e2-490c-8de8-8fd7af4d39e8", "User", "USER" },
-                    { "1832d33a-7314-45d0-94b6-d25b027dbd47", "c6a49298-1fb6-421a-a968-2f7f43f1d0c6", "Admin", "ADMIN" }
+                    { "c8e81215-c7f8-4a5f-9ca9-3611218b896e", "1b826686-5384-4afb-9297-198c87756b12", "User", "USER" },
+                    { "e3428826-1464-4ad4-84b6-f9f4c11daa9a", "c9460087-4726-4155-97de-424208593ef5", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(

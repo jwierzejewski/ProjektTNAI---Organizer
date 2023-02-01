@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 
-<AuthorizeView>
+<AuthorizeView Roles="Admin">
 @if (categories == null)
 {
     <p><em>Loading...</em></p>

@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject ICategoryRepository categoryRepository
 
-<AuthorizeView Context="AuthContext">
+<AuthorizeView Context="AuthContext" Roles="Admin">
 @if (categories == null)
 {
     <p><em>Loading...</em></p>
